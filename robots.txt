@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://odontologiarodrigues.com.br/sitemap.xml
