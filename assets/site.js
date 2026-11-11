@@ -26,9 +26,19 @@
 
   /* tag do Google, carregada somente depois do aceite */
   function loadTag() {
-    if (!CFG.gtagId || window.__tagLoaded) return;
-    window.__tagLoaded = true;
+    if (window.__tagLoaded) return;
     window.dataLayer = window.dataLayer || [];
+    if (CFG.gtmId) {
+      window.__tagLoaded = true;
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      var g = document.createElement('script');
+      g.async = true;
+      g.src = 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(CFG.gtmId);
+      document.head.appendChild(g);
+      return;
+    }
+    if (!CFG.gtagId) return;
+    window.__tagLoaded = true;
     window.gtag = function () { window.dataLayer.push(arguments); };
     var s = document.createElement('script');
     s.async = true;
@@ -43,7 +53,7 @@
   function setChoice(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
 
   var banner = document.getElementById('cookie-banner');
-  if (CFG.gtagId) {
+  if (CFG.gtmId || CFG.gtagId) {
     var choice = getChoice();
     if (choice === 'aceitar') {
       loadTag();
@@ -65,7 +75,13 @@
   /* conversao: clique em qualquer link do WhatsApp */
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href*="wa.me"]');
-    if (!a || typeof window.gtag !== 'function') return;
+    if (!a) return;
+    if (CFG.gtmId) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'whatsapp_click', link_url: a.href });
+      return;
+    }
+    if (typeof window.gtag !== 'function') return;
     window.gtag('event', 'whatsapp_click', { link_url: a.href });
     if (CFG.adsId && CFG.whatsappConversionLabel) {
       window.gtag('event', 'conversion', { send_to: CFG.adsId + '/' + CFG.whatsappConversionLabel });
