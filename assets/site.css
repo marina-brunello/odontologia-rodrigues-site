@@ -281,7 +281,7 @@
   @media (max-width:900px){ #hero .hero-copy{max-width:none;} #hero .hero-copy .lede{max-width:none;} }
 
   /* cards de servico com foto (mesmo tamanho) */
-  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-5);}
+  .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5);}
   .tile{display:flex;flex-direction:column;text-decoration:none;color:inherit;border:1px solid rgba(18,23,28,.16);border-radius:var(--radius-sm);overflow:hidden;background:rgba(255,255,255,.35);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;}
   .tile:hover,.tile:focus-visible{transform:translateY(-4px);box-shadow:var(--shadow-lift);border-color:var(--accent);}
   .tile figure{position:relative;margin:0;aspect-ratio:4/3;overflow:hidden;background:var(--fog);}
@@ -299,8 +299,8 @@
   .tile.cta h3{font-size:1.5rem;}
   .tile.cta p{color:#a7afb4;}
   .tile.cta .btn{align-self:flex-start;margin-top:var(--space-3);}
-  @media (max-width:1180px){ .tiles{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:620px){ .tiles{grid-template-columns:1fr;} }
+  @media (max-width:980px){ .tiles{grid-template-columns:repeat(2,1fr);} .tile.cta{grid-column:span 2;} }
+  @media (max-width:620px){ .tiles{grid-template-columns:1fr;} .tile.cta{grid-column:auto;} }
 
   /* quem somos: cards com detalhes no hover */
   .who-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);margin-top:var(--space-7);}
