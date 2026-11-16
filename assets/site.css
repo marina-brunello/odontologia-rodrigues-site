@@ -300,7 +300,21 @@
   .tile.cta p{color:#a7afb4;}
   .tile.cta .btn{align-self:flex-start;margin-top:var(--space-3);}
   @media (max-width:980px){ .tiles{grid-template-columns:repeat(2,1fr);} .tile.cta{grid-column:span 2;} }
-  @media (max-width:620px){ .tiles{grid-template-columns:1fr;} .tile.cta{grid-column:auto;} }
+  @media (max-width:620px){
+    .tiles{grid-template-columns:1fr;gap:12px;}
+    .tile{flex-direction:row;align-items:stretch;}
+    .tile:hover,.tile:focus-visible{transform:none;}
+    .tile figure{flex:none;width:108px;aspect-ratio:auto;min-height:108px;}
+    .tile .tag{left:6px;bottom:6px;padding:3px 6px;font-size:9px;}
+    .tile-body{padding:12px 14px;gap:4px;justify-content:center;}
+    .tile h3{font-size:1.1rem;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+    .tile h3::after{content:"→";font:400 18px/1 var(--font-sans);color:var(--accent);flex:none;}
+    .tile p{font-size:13.5px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .tile .more{display:none;}
+    .tile.cta{grid-column:auto;}
+    .tile.cta .tile-body{padding:20px;}
+    .tile.cta h3::after{content:none;}
+  }
 
   /* quem somos: cards com detalhes no hover */
   .who-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);margin-top:var(--space-7);}
