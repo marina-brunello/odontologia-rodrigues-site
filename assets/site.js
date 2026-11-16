@@ -72,6 +72,29 @@
     }
   }
 
+  /* identifica a origem do contato na mensagem do WhatsApp */
+  function origemDoContato() {
+    var o = null;
+    try { o = sessionStorage.getItem('rodrigues-origem'); } catch (e) {}
+    if (!o) {
+      var q = location.search;
+      o = (/[?&](gclid|gbraid|wbraid)=/.test(q) || /utm_source=google/i.test(q)) ? 'Google Ads' : 'site';
+      try { sessionStorage.setItem('rodrigues-origem', o); } catch (e) {}
+    }
+    return o;
+  }
+  var pagina = (document.title || '').split('|')[0].trim() || 'Início';
+  var origem = origemDoContato();
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
+    try {
+      var u = new URL(a.href);
+      var t = u.searchParams.get('text') || 'Olá, gostaria de agendar uma consulta.';
+      if (t.indexOf('(Origem:') === -1) t += ' (Origem: ' + origem + ', página: ' + pagina + ')';
+      u.searchParams.set('text', t);
+      a.href = u.toString();
+    } catch (e) {}
+  });
+
   /* conversao: clique em qualquer link do WhatsApp */
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href*="wa.me"]');
