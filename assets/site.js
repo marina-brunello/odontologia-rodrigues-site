@@ -84,7 +84,7 @@
     if (typeof window.gtag !== 'function') return;
     window.gtag('event', 'whatsapp_click', { link_url: a.href });
     if (CFG.adsId && CFG.whatsappConversionLabel) {
-      window.gtag('event', 'conversion', { send_to: CFG.adsId + '/' + CFG.whatsappConversionLabel });
+      window.gtag('event', 'conversion', { send_to: CFG.adsId + '/' + CFG.whatsappConversionLabel, value: 1.0, currency: 'BRL' });
     }
   });
 })();
