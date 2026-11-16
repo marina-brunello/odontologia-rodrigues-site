@@ -24,6 +24,20 @@
     });
   }
 
+  /* mapa do Google: so carrega depois do clique */
+  document.querySelectorAll('.map-load').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var box = b.parentNode;
+      var f = document.createElement('iframe');
+      f.src = box.getAttribute('data-src');
+      f.title = box.getAttribute('data-title') || 'Mapa';
+      f.loading = 'lazy';
+      f.referrerPolicy = 'no-referrer-when-downgrade';
+      f.setAttribute('allowfullscreen', '');
+      box.replaceChild(f, b);
+    });
+  });
+
   /* tag do Google, carregada somente depois do aceite */
   function loadTag() {
     if (window.__tagLoaded) return;
