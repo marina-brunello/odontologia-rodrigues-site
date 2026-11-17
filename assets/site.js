@@ -86,7 +86,7 @@
     }
   }
 
-  /* identifica a origem do contato na mensagem do WhatsApp */
+  /* origem do contato (site ou Google Ads), enviada ao Analytics e nao na mensagem */
   function origemDoContato() {
     var o = null;
     try { o = sessionStorage.getItem('rodrigues-origem'); } catch (e) {}
@@ -99,15 +99,6 @@
   }
   var pagina = (document.title || '').split('|')[0].trim() || 'Início';
   var origem = origemDoContato();
-  document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
-    try {
-      var u = new URL(a.href);
-      var t = u.searchParams.get('text') || 'Olá, gostaria de agendar uma consulta.';
-      if (t.indexOf('(Origem:') === -1) t += ' (Origem: ' + origem + ', página: ' + pagina + ')';
-      u.searchParams.set('text', t);
-      a.href = u.toString();
-    } catch (e) {}
-  });
 
   /* conversao: clique em qualquer link do WhatsApp */
   document.addEventListener('click', function (e) {
@@ -115,11 +106,11 @@
     if (!a) return;
     if (CFG.gtmId) {
       window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({ event: 'whatsapp_click', link_url: a.href });
+      window.dataLayer.push({ event: 'whatsapp_click', link_url: a.href, origem: origem, pagina: pagina });
       return;
     }
     if (typeof window.gtag !== 'function') return;
-    window.gtag('event', 'whatsapp_click', { link_url: a.href });
+    window.gtag('event', 'whatsapp_click', { link_url: a.href, origem: origem, pagina: pagina });
     if (CFG.adsId && CFG.whatsappConversionLabel) {
       window.gtag('event', 'conversion', { send_to: CFG.adsId + '/' + CFG.whatsappConversionLabel, value: 1.0, currency: 'BRL' });
     }
